@@ -15,11 +15,18 @@ const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
 	.split(",")
 	.map((origin) => origin.trim())
 	.filter(Boolean);
+const isAllowedVercelOrigin = (origin) =>
+	/^https:\/\/jinder-[a-z0-9-]+\.vercel\.app$/i.test(origin);
 
 app.use(
 	cors({
 		origin(origin, callback) {
-			if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+			if (
+				!origin ||
+				allowedOrigins.includes(origin) ||
+				isAllowedVercelOrigin(origin)
+			)
+				return callback(null, true);
 			return callback(new Error("Origin not allowed by CORS"));
 		},
 		credentials: true,
