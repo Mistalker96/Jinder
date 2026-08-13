@@ -8,10 +8,20 @@ import notificationRoutes from "./routes/notification.route.js";
 import messageRoutes from "./routes/message.route.js";
 import profileRoutes from "./routes/profile.route.js";
 import recruiterRoutes from "./routes/recruiter.route.js";
+
 const app = express();
+
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+	.split(",")
+	.map((origin) => origin.trim())
+	.filter(Boolean);
+
 app.use(
 	cors({
-		origin: "http://localhost:5173",
+		origin(origin, callback) {
+			if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+			return callback(new Error("Origin not allowed by CORS"));
+		},
 		credentials: true,
 	}),
 );
@@ -22,6 +32,9 @@ app.get("/", (req, res) => {
 		success: true,
 		message: "Job Portal API is running",
 	});
+});
+app.get("/health", (req, res) => {
+	res.status(200).json({ success: true, status: "ok" });
 });
 app.use("/api/jobs", jobRoutes);
 app.use("/api/auth", authRoutes);
