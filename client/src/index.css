@@ -31,12 +31,12 @@ html.dark {
 }
 html {
 	scroll-behavior: smooth;
-	overflow-x: hidden;
+	overflow-x: clip;
 }
 body {
 	margin: 0;
 	min-width: 320px;
-	overflow-x: hidden;
+	overflow-x: clip;
 	background: var(--bg);
 	color: var(--text);
 }
@@ -136,7 +136,8 @@ a {
 .site-header {
 	position: sticky;
 	top: 0;
-	z-index: 20;
+	z-index: 50;
+	width: 100%;
 	border-bottom: 1px solid var(--border);
 	background: color-mix(in srgb, var(--bg) 94%, transparent);
 	backdrop-filter: blur(12px);
@@ -255,6 +256,9 @@ a {
 	align-items: center;
 	gap: 7px;
 	margin-left: auto;
+}
+.mobile-nav {
+	display: none;
 }
 .notification-wrap {
 	position: relative;
@@ -1449,12 +1453,35 @@ a {
 	}
 }
 @media (max-width: 900px) {
-	.nav,
-	.header-actions .login {
+	.nav {
 		display: none;
 	}
 	.menu-button {
 		display: grid;
+	}
+	.mobile-nav {
+		display: grid;
+		gap: 4px;
+		max-height: calc(100vh - 64px);
+		overflow-y: auto;
+		padding-block: 8px 12px;
+	}
+	.mobile-nav a,
+	.mobile-nav-action {
+		width: 100%;
+		padding: 10px 12px;
+		border: 0;
+		border-radius: 8px;
+		background: transparent;
+		color: var(--text);
+		font-weight: 600;
+		text-align: left;
+	}
+	.mobile-nav a:hover,
+	.mobile-nav a.active,
+	.mobile-nav-action:hover {
+		background: var(--surface);
+		color: var(--primary);
 	}
 	.listing-layout,
 	.detail-grid {
@@ -1534,20 +1561,28 @@ a {
 		padding-block: 8px;
 	}
 	.brand {
-		font-size: 19px;
+		gap: 5px;
+		font-size: 18px;
 	}
 	.brand-mark {
-		width: 34px;
-		height: 34px;
-		font-size: 22px;
+		width: 32px;
+		height: 32px;
+		font-size: 21px;
 	}
 	.header-actions {
-		gap: 4px;
+		gap: 2px;
 	}
 	.header-actions .button.primary {
+		display: none;
+	}
+	.header-actions .login {
+		max-width: 82px;
 		min-height: 36px;
-		padding-inline: 10px;
+		padding-inline: 9px;
+		overflow: hidden;
 		font-size: 12px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	.hero h1 {
 		font-size: clamp(32px, 11vw, 42px);

@@ -272,6 +272,8 @@ export function Header() {
 						className="icon-button menu-button"
 						onClick={() => setOpen(!open)}
 						aria-label="Mở menu"
+						aria-expanded={open}
+						aria-controls="mobile-navigation"
 					>
 						<Menu size={20} />
 					</button>
@@ -279,14 +281,51 @@ export function Header() {
 			</div>
 			{open && (
 				<nav
-					className="container"
-					style={{ display: "grid", gap: 6, paddingBottom: 12 }}
+					id="mobile-navigation"
+					className="container mobile-nav"
+					aria-label="Điều hướng di động"
 				>
 					{links.map(([to, label]) => (
 						<NavLink key={to} to={to} onClick={() => setOpen(false)}>
 							{label}
 						</NavLink>
 					))}
+					{session?.user.role === "employee" && (
+						<NavLink to="/jinder-match" onClick={() => setOpen(false)}>
+							Jinder Match
+						</NavLink>
+					)}
+					{session?.user.role === "recruiter" && (
+						<NavLink to="/ung-vien-match" onClick={() => setOpen(false)}>
+							Ứng viên Match
+						</NavLink>
+					)}
+					{session ?
+						<>
+							<NavLink to="/tai-khoan" onClick={() => setOpen(false)}>
+								Tài khoản
+							</NavLink>
+							<button
+								type="button"
+								className="mobile-nav-action"
+								onClick={() => {
+									clearSession();
+									setOpen(false);
+									navigate("/");
+								}}
+							>
+								Đăng xuất
+							</button>
+						</>
+					: 	<>
+							<NavLink to="/dang-nhap" onClick={() => setOpen(false)}>
+								Đăng nhập
+							</NavLink>
+							<NavLink to="/dang-ky" onClick={() => setOpen(false)}>
+								Đăng ký
+							</NavLink>
+						</>
+					}
 				</nav>
 			)}
 		</header>
