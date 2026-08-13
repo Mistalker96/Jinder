@@ -31,12 +31,18 @@ html.dark {
 }
 html {
 	scroll-behavior: smooth;
+	overflow-x: hidden;
 }
 body {
 	margin: 0;
 	min-width: 320px;
+	overflow-x: hidden;
 	background: var(--bg);
 	color: var(--text);
+}
+img,
+svg {
+	max-width: 100%;
 }
 button,
 input,
@@ -88,6 +94,9 @@ a {
 	color: var(--text);
 	font-size: 14px;
 	font-weight: 600;
+	max-width: 100%;
+	white-space: normal;
+	text-align: center;
 	transition: 0.18s;
 }
 .button:hover {
@@ -137,6 +146,13 @@ a {
 	display: flex;
 	align-items: center;
 	gap: 34px;
+}
+.header-inner > *,
+.section-head > *,
+.listing-layout > *,
+.detail-grid > *,
+.form-grid > * {
+	min-width: 0;
 }
 .brand {
 	display: flex;
@@ -1091,6 +1107,7 @@ a {
 }
 .pagination {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	gap: 7px;
 	margin-top: 30px;
@@ -1295,6 +1312,8 @@ a {
 	gap: 15px;
 }
 .account-table {
+	display: block;
+	overflow-x: auto;
 	width: 100%;
 	border-collapse: collapse;
 	text-align: left;
@@ -1304,6 +1323,7 @@ a {
 .account-table td {
 	padding: 13px 10px;
 	border-bottom: 1px solid var(--border);
+	white-space: nowrap;
 }
 .account-table th {
 	color: var(--muted);
@@ -1410,13 +1430,50 @@ a {
 	height: 100%;
 	object-fit: cover;
 }
-@media (max-width: 760px) {
+@media (max-width: 1024px) {
+	.header-inner {
+		gap: 16px;
+	}
+	.nav {
+		gap: 4px;
+	}
+	.nav a,
+	.nav-trigger {
+		padding-inline: 8px;
+	}
+	.company-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.category-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+@media (max-width: 900px) {
 	.nav,
 	.header-actions .login {
 		display: none;
 	}
 	.menu-button {
 		display: grid;
+	}
+	.listing-layout,
+	.detail-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.filters,
+	.apply-card {
+		position: static;
+	}
+}
+@media (max-width: 760px) {
+	.container {
+		width: min(100% - 24px, 1152px);
+	}
+	.page {
+		padding: 36px 0 56px;
+	}
+	.section {
+		padding: 52px 0;
 	}
 	.hero {
 		padding: 66px 0;
@@ -1435,7 +1492,7 @@ a {
 	.category-grid,
 	.job-grid,
 	.company-grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 	}
 	.filters {
 		position: static;
@@ -1459,6 +1516,91 @@ a {
 		margin-left: 0;
 	}
 	.form-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.job-summary-card {
+		padding: 20px;
+	}
+	.employer-form,
+	.match-card {
+		padding: 24px;
+	}
+}
+@media (max-width: 520px) {
+	.header-inner {
+		height: auto;
+		min-height: 60px;
+		gap: 8px;
+		padding-block: 8px;
+	}
+	.brand {
+		font-size: 19px;
+	}
+	.brand-mark {
+		width: 34px;
+		height: 34px;
+		font-size: 22px;
+	}
+	.header-actions {
+		gap: 4px;
+	}
+	.header-actions .button.primary {
+		min-height: 36px;
+		padding-inline: 10px;
+		font-size: 12px;
+	}
+	.hero h1 {
+		font-size: clamp(32px, 11vw, 42px);
+	}
+	.hero p {
+		font-size: 16px;
+	}
+	.section-head h2 {
+		font-size: 25px;
+	}
+	.job-card {
+		gap: 11px;
+		padding: 15px;
+	}
+	.job-logo,
+	.category-icon {
+		width: 40px;
+		height: 40px;
+	}
+	.job-card-head,
+	.listing-top {
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+	.job-card-footer .button,
+	.search-bar > .button {
+		width: 100%;
+	}
+	.job-summary-card {
 		grid-template-columns: 1fr;
+	}
+	.job-summary-card .large,
+	.detail-meta,
+	.detail-tags {
+		grid-column: 1;
+	}
+	.match-card {
+		margin-top: 22px;
+		padding: 20px 16px;
+	}
+	.match-visual,
+	.profile-editor-avatar {
+		width: 132px;
+		height: 132px;
+		font-size: 36px;
+	}
+	.match-card h2 {
+		font-size: 24px;
+	}
+	.match-highlights > div {
+		padding: 12px;
+	}
+	.empty {
+		padding: 28px 16px;
 	}
 }
