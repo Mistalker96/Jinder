@@ -1,4 +1,3 @@
-import { SlidersHorizontal } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { JobCard } from "../components/JobCard";
@@ -9,7 +8,6 @@ export default function Jobs() {
 	const [params, setSearchParams] = useSearchParams();
 	const [jobs, setJobs] = useState<Job[]>([]),
 		[loading, setLoading] = useState(true),
-		[filters, setFilters] = useState(false),
 		[sort, setSort] = useState("newest"),
 		[pagination, setPagination] = useState<JobResponse["pagination"] | null>(
 			null,
@@ -34,6 +32,10 @@ export default function Jobs() {
 		const next = new URLSearchParams(params);
 		next.set("page", String(page));
 		setSearchParams(next);
+	};
+	const clearFilters = () => {
+		setSort("newest");
+		setSearchParams({});
 	};
 	useEffect(() => {
 		const controller = new AbortController();
@@ -98,13 +100,12 @@ export default function Jobs() {
 			<div className="listing-layout">
 				<aside
 					className="panel filters"
-					style={{ display: filters || innerWidth >= 760 ? "block" : "none" }}
 				>
 					<div style={{ display: "flex", justifyContent: "space-between" }}>
 						<h2>Bộ lọc</h2>
 						<button
 							className="button ghost"
-							onClick={() => location.assign("/viec-lam")}
+							onClick={clearFilters}
 						>
 							Xóa lọc
 						</button>
@@ -173,9 +174,6 @@ export default function Jobs() {
 							)}
 						</p>
 						<div style={{ display: "flex", gap: 8 }}>
-							<button className="button" onClick={() => setFilters(!filters)}>
-								<SlidersHorizontal size={16} /> Bộ lọc
-							</button>
 							<select
 								className="select"
 								value={sort}

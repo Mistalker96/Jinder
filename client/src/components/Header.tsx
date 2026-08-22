@@ -70,7 +70,11 @@ export function Header() {
 					Jinder
 				</NavLink>
 				<nav className="nav">
-					<div className="nav-dropdown">
+					<div
+						className="nav-dropdown"
+						onMouseEnter={() => setDropdown("jobs")}
+						onMouseLeave={() => setDropdown(null)}
+					>
 						<button
 							className="nav-trigger"
 							onClick={() => setDropdown(dropdown === "jobs" ? null : "jobs")}
@@ -140,7 +144,11 @@ export function Header() {
 							</div>
 						)}
 					</div>
-					<div className="nav-dropdown">
+					<div
+						className="nav-dropdown"
+						onMouseEnter={() => setDropdown("companies")}
+						onMouseLeave={() => setDropdown(null)}
+					>
 						<button
 							className="nav-trigger"
 							onClick={() =>
